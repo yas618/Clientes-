@@ -128,7 +128,7 @@ const updateCadastro = (req, res) => {
         ...(categoria && {categoria}),
         ...(ativo && { ativo})
     }
-        :carros
+        :cadastro
     )
 
     //Atualizar o Array
@@ -136,7 +136,7 @@ const updateCadastro = (req, res) => {
     const cadastroEditada = cadastro.find(b => b.id === idParaEditar);
     res.status(200).json({
         success: true,
-        message: "Dados atualizados com sucesso da Carros",
+        message: "Dados atualizados com sucesso do Cadastro",
         b: cadastroExiste
     })
 }

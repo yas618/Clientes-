@@ -1,22 +1,18 @@
 import express from "express";
-import { createCadastro, deleteCadastro, getAllCadastro, getCadastroByld, updateCadastro } from "../controllers/cadastroController.js";
-import { getCadastroByld } from "../controllersCadastros.js";
+import { 
+    getAllCadastro, 
+    getAllCadastro, 
+    createCadastro, 
+    deleteCadastro, 
+    updateCadastro
+} from "../controllers/cadastroController.js";
 
 const router = express.Router();
 
-// Listar todos
 router.get("/", getAllCadastro);
-
-// Buscar por id
-router.get("/:id", getCadastroByld);
-
-// Criar novo
+router.get("/:id", getCadastroById);
 router.post("/", createCadastro);
-
-// Atualizar
-router.put("/:id", updateCadastro);
-
-// Deletar
 router.delete("/:id", deleteCadastro);
+router.put("/:id", updateCadastro);
 
 export default router;
