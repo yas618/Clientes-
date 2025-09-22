@@ -3,7 +3,7 @@ import cadastro from "../models/dados.js";
 //Buscar itens
 const getAllCadastro = (req, res) => {
     const { id, nome, telefone, endereco, dataNascimento, categoria, ativo } = req.query;
-    let resultado = carros;
+    let resultado = cadastro;
 
     if(nome) {
         resultado = resultado.filter(b => b.nome.toLowerCase().includes(nome.toLowerCase()))
@@ -14,13 +14,13 @@ const getAllCadastro = (req, res) => {
 
     res.status(200).json({
         total: resultado.length,
-        carross: resultado
+        cadastro: resultado
     });
 };
 
 const getCadastroByld = (req, res) => {
     const id = parseInt(req.params.id);
-    const carross = cadastro.find(b => b.id === id);
+    const cadastro = cadastro.find(b => b.id === id);
 
     if(!cadastro) {
         return res.status(404).json({
@@ -31,36 +31,39 @@ const getCadastroByld = (req, res) => {
     res.status(200).json(cadastro);
 };
 
-const createCarros = (req, res) => {
+const createCadastro = (req, res) => {
     const { nome, id, email, telefone, endereco, dataNascimento, categoria, ativo } = req.body;
 
-    if(!nome || !modelo) {
+    if(!nome || ! email) {
         return res.status(400).json({
             success: false,
-            message: "Nome, modelo e cor são obrigatório"
+            message: "Nome, email e telefone são obrigatório"
         });
     }
 
-    const novoCarros = {
-        id: carros.length + 1,
+    const novoCadastro = {
+        id: cadastro.length + 1,
         nome: nome,
-        modelo: modelo,
-        ano: ano,
-        cor: cor,
-        qntdVitorias: qntdVitorias
+        email: email,
+        telefone: telefone, 
+        endereco: endereco,
+        dataNascimento: dataNascimento,
+        categoria: categoria,
+        ativo: ativo
+    
     };
 
-    carros.push(novoCarros);
+    cadastro.push(novoCadastro);
     res.status(201).json({
         success: true,
-        message: "Nova Carros cadastrada com sucesso",
-        carros: novoCarros
+        message: "Novo cliente  cadastrada com sucesso",
+        cadastro: novoCadastro
     });
 };
 
 //Deletar
 
-const deleteCarros = (req, res) => {
+const deleteCadastro = (req, res) => {
     const id = parseInt(req.params.id);
 
     //Verificação
@@ -71,10 +74,10 @@ const deleteCarros = (req, res) => {
         });
     }
 
-    //Verificar se não tem outra Carros com o ID
-    const carrosParaRemover = carros.find(b => b.id === id);
+    //Verificar se não tem outra Cadastro com o ID
+    const cadastroParaRemover = carros.find(b => b.id === id);
 
-    if(!carrosParaRemover) {
+    if(!cadastroParaRemover) {
         return res.status(404).json({
             success: false,
             message: `Carros com o ID ${id} não existe`
@@ -82,20 +85,20 @@ const deleteCarros = (req, res) => {
     }
 
     //Remover Carros com o ID
-    const carrosFiltradas = carros.filter(carros => carros.id !== id);
-    carros.slice(0, carros.length, ...carrosFiltradas);
+    const cadastroFiltradas = carros.filter(cadastro => cadastro.id !== id);
+    cadastro.slice(0, cadastro.length, ...cadastroFiltradas);
 
     res.status(200).json({
         success: true,
-        message: `A Carros ${id} foi removido com sucesso`
+        message: `O Cadastro ${id} foi removido com sucesso`
     })
 };
 
 //Update
-const updateCarros = (req, res) => {
+const updateCadastro = (req, res) => {
     //Ter logica do put update
     const id = parseInt(req.params.id);
-    const { nome, modelo, cor,  ano } = req.body;
+    const { nome, email, telefone, endereco, dataNascimento, categoria, ativo } = req.body;
 
     //Renomear id
     if(isNaN(idParaEditar)){
@@ -106,33 +109,36 @@ const updateCarros = (req, res) => {
     }
 
     //Verificar se a Carros com Id: idParaEditar existe
-    const carrosExiste = carros.find(b => b.id === idParaEditar);
-    if(!carrosExiste){
+    const cadastroExiste = cadastro.find(b => b.id === idParaEditar);
+    if(!cadastroExiste){
         return res.status(404).json({
             sucess: false,
-            message: "A Carros com o id " + idParaEditar + "é inexistente"
+            message: "A Cadastro com o id " + idParaEditar + "é inexistente"
         })
     }
 
     //
-    const carrosAtualizadas = carros.map(b => b.id === idParaEditar ? {
-        ...carros,
+    const cadastroAtualizadas = cadastro.map(b => b.id === idParaEditar ? {
+        ...cadastro,
         ...(nome && { nome }),
-        ...(modelo &&  { modelo }),
-        ...(ano &&  { ano }),
-        ...(cor && {cor})
+        ...(email &&  { email }),
+        ...(telefone &&  { telefone }),
+        ...(endereco && {endereco}),
+        ...(dataNascimento && {dataNascimento}),
+        ...(categoria && {categoria}),
+        ...(ativo && { ativo})
     }
         :carros
     )
 
     //Atualizar o Array
-    carros.splice(0, carros.length, ...carrosAtualizadas);
-    const carrosEditada = carros.find(b => b.id === idParaEditar);
+    cadastro.splice(0, cadastro.length, ...cadastroAtualizadas);
+    const cadastroEditada = cadastro.find(b => b.id === idParaEditar);
     res.status(200).json({
         success: true,
         message: "Dados atualizados com sucesso da Carros",
-        b: carrosExiste
+        b: cadastroExiste
     })
 }
 
-export { getAllCarros, getCarrosByld, createCarros, deleteCarros, updateCarros };
+export { getAllCadastro, getCadastroByld, createCadastro, deleteCadastro, updateCadastro };
