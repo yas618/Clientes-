@@ -84,8 +84,8 @@ const deleteCadastro = (req, res) => {
         });
     }
 
-    //Remover Carros com o ID
-    const cadastroFiltradas = carros.filter(cadastro => cadastro.id !== id);
+    //Remover Cadastro com o ID
+    const cadastroFiltradas = cadastro.filter(cadastro => cadastro.id !== id);
     cadastro.slice(0, cadastro.length, ...cadastroFiltradas);
 
     res.status(200).json({

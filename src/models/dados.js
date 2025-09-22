@@ -1,6 +1,6 @@
 // models/dados.js
 
-const dados = [
+const cadastro = [
     {
       id: 1,
       nome: "João Silva",
